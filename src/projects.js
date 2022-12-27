@@ -1,8 +1,4 @@
-// projects are a container to which specific
-// todo objects are contained.
-
-const projects = (title, description) => {
-	tasks = [];
+const Project = (title, description, tasks) => {
 	return {
 		title, 
 		description,
@@ -10,15 +6,21 @@ const projects = (title, description) => {
 	}
 }
 
-const renderProjects = (() => {
-	
-	const projectList = () => {
-		console.log("hello")
+const projects = (() => {
+	const projects = [];
+
+	const getProjects = () => projects;
+
+	const addProject = (title, desc) => {
+		const newProject = Project(title, desc, []);
+		projects.push(newProject);
 	}
 
 	return {
-		projectList,
+		addProject,
+		getProjects,
 	}
 })();
 
-export default renderProjects.projectList;
+
+export default projects;

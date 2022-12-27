@@ -12,10 +12,9 @@
 		<div></div>
 	</header>
 	<div class = "projects-pane">
-		<div class = 'projects-folder'>
-			<div>General</div>
+		<div class = 'projects-list'>
 		</div>
-		<button id = 'create-project-btn'>
+		<button id = 'open-project-dialog'>
 			Create new list
 		</button>
 	</div>
@@ -32,16 +31,22 @@
 		</div>
 		<div class="form-content">
 			<div class="form-row">
-				<label for = 'project-title'>Project Title</label>
-				<input type="text" name="project-title" id = 'project-title'>	
+				<div class="input-desc">
+					<label for = 'project-title'>Project Title</label>
+					<p id = 'title-counter'>0/20</p>
+				</div>
+				<input type="text" name="project-title" id = 'project-title' maxlength="20">	
 			</div>
 			<div class="form-row">
-				<label for = 'project-description'>Project Description</label>
-				<input type="text" name = 'project-description' name="project-description" id = "project-description">	
+				<div class="input-desc">
+					<label for = 'project-description'>Project Description</label>
+					<p id = "desc-counter">0/50</p>
+				</div>
+				<textarea name="project-description" id = "project-description" maxlength="50" rows = "3"></textarea>	
 			</div>
 		</div>
 		<div class="form-footer">
-			<button type = 'submit' id = 'submit-project'>Submit</button>
+			<button type = 'submit' id = 'create-project'>Submit</button>
 		</div>
 	</form>
 	</dialog>
