@@ -23,31 +23,64 @@
 		</button>
 	</div>
 	<div id = "main-content"></div>
-	<dialog>
-	<form method = "POST" action = ".">
-		<div class="form-header">
-			<h3>Create a new project</h3>
-		</div>
-		<div class="form-content">
-			<div class="form-row">
-				<div class="input-desc">
-					<label for = 'project-title'>Project Title</label>
-					<p id = 'title-counter'>0/20</p>
-				</div>
-				<input type="text" name="project-title" id = 'project-title' maxlength="20">	
+	<dialog id = 'project-form-dialog'>
+		<form method = "POST" action = ".">
+			<div class="form-header">
+				<h3>Create a new project</h3>
 			</div>
-			<div class="form-row">
-				<div class="input-desc">
-					<label for = 'project-description'>Project Description</label>
-					<p id = "desc-counter">0/50</p>
+			<div class="form-content">
+				<div class="form-row">
+					<div class="input-desc">
+						<label for = 'project-title'>Project Title</label>
+						<p id = 'title-counter'>0/20</p>
+					</div>
+					<input type="text" name="project-title" id = 'project-title' maxlength="20">	
 				</div>
-				<textarea name="project-description" id = "project-description" maxlength="50" rows = "3"></textarea>	
+				<div class="form-row">
+					<div class="input-desc">
+						<label for = 'project-description'>Project Description</label>
+						<p id = "desc-counter">0/50</p>
+					</div>
+					<textarea name="project-description" id = "project-description" maxlength="50" rows = "3"></textarea>	
+				</div>
 			</div>
-		</div>
-		<div class="form-footer">
-			<button type = 'submit' id = 'create-project'>Submit</button>
-		</div>
-	</form>
+			<div class="form-footer">
+				<button type = 'submit' id = 'create-project'>Submit</button>
+			</div>
+		</form>
+	</dialog>
+	<dialog id = 'task-form-dialog'>
+		<form method = "POST" action = "">
+			<div class="form-header">
+				<h3>Create A Task</h3>
+			</div>
+			<div class="form-content">
+				<div class="form-row">
+					<label for = 'task-title'>Task Title</label>
+					<input type="text" name="task-title" id = 'task-title'>
+				</div>
+				<div class="form-row">
+					<label for = 'task-title'>Task Description</label>
+					<textarea name="task-description" id = 'task-description' rows = '5'></textarea>
+				</div>
+				<div class="form-row">
+					<label for = 'task-title'>Due Date</label>
+					<input type="date" name="due-date" id = 'due-date'>
+				</div>
+				<div class="form-row">
+					<label for = 'task-priority'>Task Priority</label>
+					<select id = 'task-priority' name = 'task-priority'>
+						<option value = 'low'>Low</option>
+						<option value = 'medium'>Medium</option>
+						<option value = 'high'>High</option>
+					</select>
+				</div>
+				
+			</div>
+			<div class="form-footer">
+				<button type = 'submit' id = 'create-task'>Create</button>
+			</div>
+		</form>
 	</dialog>
 </body>
 </html>

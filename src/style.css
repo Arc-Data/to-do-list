@@ -4,6 +4,13 @@
 	font-size: 12px;
 }
 
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+
 body {
 	font-family:'Raleway', sans-serif;
 	background:#f5f5f5;
@@ -112,16 +119,35 @@ header div:first-child {
 }
 
 #main-content {
-	padding:20px 0px 0px 80px;
+	padding:40px 0px 0px 80px;
+	display:flex;
+	flex-direction:column;
+	gap:20px;
 }
 
 .project-description {
 	font-size:1.4rem;
 }
 
+.create-task-btn {
+	width:120px;
+	text-transform: uppercase;
+	background:#1088eb;
+	border:none;
+	border-radius:8px;
+	color:white;
+	padding:8px 12px;
+	font-weight: 500;
+}
+
+.create-task-btn:hover {
+	cursor:pointer;
+	transform: scale(1.01);
+}
+
 h1 {
-	margin-bottom:10px;
 	padding:0;
+	margin:0;
 	font-size:3.4rem;
 /*	font-style: italic;*/
 }
@@ -141,6 +167,8 @@ dialog {
 	box-shadow: 0 0 5em rgba(0, 0, 0, 0.3);
 	border-radius:12px;
 	padding:20px;
+	background:#14151f;
+	color:white;
 }
 
 form {
@@ -159,11 +187,20 @@ form {
 	justify-content: space-between;
 }
 
-.form-content input,
-.form-content textarea {
-	width:300px;
+input,
+textarea,
+select {
+	width:340px;
+/*	margin:0 auto;*/
 	padding:8px 12px;
 	font-family: 'Raleway', sans-serif;
+	background:transparent;
+	border-color:white;
+	color:white;
+}
+
+.form-content option {
+	color:black;
 }
 
 .form-content textarea {
@@ -178,14 +215,21 @@ form {
 
 .form-footer{
 	padding-top:20px;
+	text-align:center;
 }
 
 .form-footer button {
-	width:100%;
-	padding:8px 12px;
+	margin:0 auto;
+	width:120px;
+	border-radius:8px;
+	padding:12px 16px;
+	background:#1088eb;
+	color:white;
 }
 
+#task-description {
 
+}
 
 dialog::backdrop {
 	background:rgba(0,0,0,0.6);
