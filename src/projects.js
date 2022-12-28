@@ -9,16 +9,23 @@ const Project = (title, description, tasks) => {
 const projects = (() => {
 	const projects = [];
 
-	const getProjects = () => projects;
+	const getProjectList = () => projects;
+
+
 
 	const addProject = (title, desc) => {
 		const newProject = Project(title, desc, []);
 		projects.push(newProject);
 	}
 
+	const getProject = (index) => {
+		return projects[index];
+	}
+
 	return {
 		addProject,
-		getProjects,
+		getProjectList,
+		getProject,
 	}
 })();
 

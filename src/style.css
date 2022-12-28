@@ -54,7 +54,7 @@ header div:first-child {
 }
 
 
-.projects-pane {
+.side-bar {
 	background:white;
 	height:100%;
 	box-shadow: 0 0 1em rgba(0, 0, 0, 0.3);
@@ -63,22 +63,44 @@ header div:first-child {
 	font-weight:700;
 }
 
-.projects-list {
+.project-navigation {
 	font-size:1.2rem;
-	font-weight: 500;
-	padding-top:40px;
+	padding: 40px 15px 0px 15px;
 }
 
-.projects-list > div{
-	padding:5px 30px;
+#general, #categories {
+	padding:10px 10px;
+	border-radius:12px;
 }
 
+#categories {
+	text-transform: uppercase;
+	font-weight:500;
+	margin-top:20px;
+	color:#c5c5c5;
+} 
+
+.projects-list > div {
+	padding:10px 20px;
+}
+
+.projects-list > div, 
+#general  {
+	border-radius:12px;
+}
+
+.projects-list > div:hover,
+#general:hover {
+	cursor:pointer;
+	background: rgba(0,0,0,0.3);
+}
 
 #open-project-dialog {
 	padding:20px;
 	border:none;
 	border-top:1px solid #ccc;
 	background:transparent;
+	text-align:left;
 	outline:none;
 	color: #2b2b2b;
 	font-size:1.2rem;
@@ -86,9 +108,10 @@ header div:first-child {
 
 #open-project-dialog:hover {
 	cursor:pointer;
+	background:rgba(0,0,0,0.3);
 }
 
-.main-content {
+#main-content {
 	padding:20px 0px 0px 80px;
 }
 
