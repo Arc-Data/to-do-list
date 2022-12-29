@@ -130,25 +130,56 @@ header div:first-child {
 	gap:10px;
 }
 
+
+
 #task-container {
 	display:flex;
 	flex-direction: column;
 	gap:5px;
+	width:80%;
 }
 
 .taskCard {
 	box-shadow:0px 0px 5px rgba(0,0,0,0.3);
-	width:80%;
+	position:relative;
 	background:white;
+	width:100%;
 	padding:10px 20px;
 	font-size:1.2em;
 	display:grid;
-	grid-template-columns:1fr auto auto;
+	align-items:center;
+	grid-template-columns:3fr 80px 1fr auto;
+	gap:20px;
 }
 
 .taskCard:hover {
 	cursor:pointer;
-	background:#ccc;
+}
+
+.taskCard.complete {
+	background:rgba(0,0,0,0.3);
+	box-shadow:none;
+/*	text-decoration: line-through;*/
+}
+
+.taskCard.complete:before {
+	content : '';
+	position:absolute;
+	top:50%;
+	left:0;
+	border-bottom:1px solid black;
+	width:100%;
+}
+
+input[type="checkbox"],
+input[type="checkbox"]::before,
+input[type="checkbox"]::after {
+	margin:0;
+}
+
+input[type='checkbox']  {
+	width:20px;
+	height:20px;
 }
 
 .project-description {
@@ -177,6 +208,13 @@ header div:first-child {
 
 .delete-btn {
 	background:red;
+}
+
+.detail-btn {
+	background:transparent;
+	color:black;
+	border:1px solid green;
+	text-align:center;
 }
 
 h1 {

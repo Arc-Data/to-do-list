@@ -14,8 +14,13 @@ const task = (() => {
 		return Task(title, description, date, priority);
 	}
 
+	const changeStatus = (task, value) => {
+		task.isFinished = value;
+	}
+
 	return {
 		createTask,
+		changeStatus,
 	}
 })();
 

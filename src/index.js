@@ -21,7 +21,6 @@ const DOMController = (() => {
 	const projectListContainer = document.querySelector('.projects-list');
 
 	const mainContent = document.querySelector('#main-content'); 
-	// const taskContainer = document.querySelector('#task-container'); 
 
 	let currentPage = -1;
 
@@ -73,6 +72,7 @@ const DOMController = (() => {
 		const projects = project.getProjectList();
 		projects.forEach(project => {
 			project.tasks.forEach(task => {
+				if(task.isFinished) return;
 				let div = document.createElement('div');
 				div.textContent = task.title;
 				div.classList.add('taskCard');
@@ -81,18 +81,47 @@ const DOMController = (() => {
 		})
 	}
 
+	const taskComplete = (e, index) => {
+		const projectObj = project.getProject(currentPage);
+		const idx = e.target.closest('div').dataset.idx;
+		task.changeStatus(projectObj.tasks[idx], e.target.checked);
+		project.saveProjectState();
+		renderTasks();
+	}
+
 	const renderTasks = () => {
 		const tasks = project.getProject(currentPage).tasks;
 		const taskContainer = document.querySelector('#task-container')
 		clearTasks(taskContainer);
 
-		tasks.forEach((task, idx) => {
-			let div = document.createElement('div');
-			div.classList.add('taskCard');
-			div.dataset.idx = idx;
-			taskContainer.appendChild(div);
+		tasks.forEach((taskItem, idx) => {
+			let taskCard = document.createElement('div');
+			taskCard.classList.add('taskCard');
+			taskCard.dataset.idx = idx;
+			if(taskItem.isFinished) {
+				console.log(`Supposed to be finished : ${taskItem.title}`)
+				taskCard.classList.add('complete');
+			}
+			
+			let title = document.createElement('p'); 
+			title.textContent = taskItem.title;
 
-			div.textContent = task.title;
+			let detailsBtn = document.createElement('div');
+			detailsBtn.textContent = 'DETAILS';
+			detailsBtn.classList.add('btn');
+			detailsBtn.classList.add('detail-btn')
+
+			let dueDate = document.createElement('div');
+			dueDate.textContent = taskItem.dueDate;
+
+			let input = document.createElement('input')
+			input.type = 'checkbox';
+			input.name = 'finished';
+			input.checked = taskItem.isFinished;
+			input.addEventListener('click', (e) => taskComplete(e));
+
+			taskCard.append(title, detailsBtn, dueDate, input)
+			taskContainer.appendChild(taskCard);
 
 		})
 

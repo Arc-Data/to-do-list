@@ -8,28 +8,30 @@ const Project = (title, description, tasks) => {
 
 const projects = (() => {
 	const projects = JSON.parse(localStorage.getItem("projects")) || [];
-	console.log(projects);
+
 	const getProjectList = () => projects;
 
 	const addProject = (title, desc) => {
 		const newProject = Project(title, desc, []);
 		projects.push(newProject);
-		localStorage.setItem("projects", JSON.stringify(projects));
+		saveProjectState();
 	}
 
 	const getProject = (index) => {
 		return projects[index];
 	}
 
-	const addTask = (index, task) => {
-		projects[index].tasks.push(task);
+	const saveProjectState = () => {
 		localStorage.setItem("projects", JSON.stringify(projects));
 	}
 
+	const addTask = (index, task) => {
+		projects[index].tasks.push(task);
+	}
+
 	const deleteProject = (index) => {
-		console.log("hello")
 		projects.splice(index, 1);		
-		localStorage.setItem("projects", JSON.stringify(projects));
+		saveProjectState();
 	}
 
 	return {
@@ -38,6 +40,7 @@ const projects = (() => {
 		getProject,
 		deleteProject,
 		addTask, 
+		saveProjectState,
 	}
 })();
 
