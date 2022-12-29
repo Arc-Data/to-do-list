@@ -26,10 +26,17 @@ const projects = (() => {
 		localStorage.setItem("projects", JSON.stringify(projects));
 	}
 
+	const deleteProject = (index) => {
+		console.log("hello")
+		projects.splice(index, 1);		
+		localStorage.setItem("projects", JSON.stringify(projects));
+	}
+
 	return {
 		addProject,
 		getProjectList,
 		getProject,
+		deleteProject,
 		addTask, 
 	}
 })();

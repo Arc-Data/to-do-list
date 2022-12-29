@@ -75,6 +75,7 @@ const DOMController = (() => {
 			project.tasks.forEach(task => {
 				let div = document.createElement('div');
 				div.textContent = task.title;
+				div.classList.add('taskCard');
 				taskContainer.appendChild(div);
 			}) 
 		})
@@ -92,7 +93,7 @@ const DOMController = (() => {
 			taskContainer.appendChild(div);
 
 			div.textContent = task.title;
-			
+
 		})
 
 	}
@@ -131,6 +132,12 @@ const DOMController = (() => {
 		renderGeneralTasks();
 	}
 
+	const deleteProject = () => {
+		project.deleteProject(currentPage);
+		renderProjectList();
+		renderGeneralPage();
+	}
+
 	const renderPage = (index) => {
 		clearPageContent();
 		currentPage = index;
@@ -144,12 +151,24 @@ const DOMController = (() => {
 		p.textContent = projectObj.description;
 		mainContent.appendChild(p);
 
+		const btnContainer = document.createElement('div');
+		btnContainer.classList.add('btn-flex');
+		mainContent.appendChild(btnContainer);
+
 		const createTaskBtn = document.createElement('button');
 		createTaskBtn.textContent = 'Create Task';
-		createTaskBtn.classList.add('create-task-btn');
+		createTaskBtn.classList.add('btn');
+		createTaskBtn.classList.add('primary-btn');
 		createTaskBtn.dataset.idx = index;
 		createTaskBtn.addEventListener('click', openTaskFormDialog);
-		mainContent.appendChild(createTaskBtn);
+		btnContainer.appendChild(createTaskBtn);
+
+		const deleteProjectBtn = document.createElement('button');
+		deleteProjectBtn.textContent = 'Delete Project';
+		deleteProjectBtn.classList.add('btn');
+		deleteProjectBtn.classList.add('delete-btn');
+		deleteProjectBtn.addEventListener('click', deleteProject);
+		btnContainer.appendChild(deleteProjectBtn);
 
 		const taskContainer = document.createElement('div');
 		taskContainer.id = 'task-container';
@@ -174,6 +193,7 @@ const DOMController = (() => {
 			let div = document.createElement('div');
 			div.textContent = project.title;
 			div.dataset.idx = idx; 
+			div.classList.add('project-tab');
 			div.addEventListener('click', (e) => {
 				renderPage(e.target.dataset.idx);
 			})
