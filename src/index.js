@@ -4,7 +4,6 @@ import task from './task.js';
 
 
 const DOMController = (() => {
-	console.log(task)
 	const generalTask = [];
 
 	const addProjectBtn = document.querySelector('#open-project-dialog');
@@ -88,8 +87,12 @@ const DOMController = (() => {
 
 		tasks.forEach((task, idx) => {
 			let div = document.createElement('div');
-			div.textContent = task.title;
+			div.classList.add('taskCard');
+			div.dataset.idx = idx;
 			taskContainer.appendChild(div);
+
+			div.textContent = task.title;
+			
 		})
 
 	}
