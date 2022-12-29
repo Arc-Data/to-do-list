@@ -130,7 +130,9 @@ header div:first-child {
 	gap:10px;
 }
 
-
+.btn-flex-right {
+	justify-content: flex-end;
+}
 
 #task-container {
 	display:flex;
@@ -217,6 +219,11 @@ input[type='checkbox']  {
 	text-align:center;
 }
 
+.ghost-btn {
+	background:white;
+	color:black;
+}
+
 h1 {
 	padding:0;
 	margin:0;
@@ -299,10 +306,27 @@ select {
 	color:white;
 }
 
-#task-description {
-
-}
 
 dialog::backdrop {
 	background:rgba(0,0,0,0.6);
+}
+
+#task-detail-dialog {
+	max-width:800px;
+	width:100%;
+}
+
+.task-detail-container {
+	display:grid;
+	grid-template-rows:auto 300px auto;
+}
+
+.task-description {
+	overflow-y: auto;
+}
+
+.task-detail-header {
+	display:flex;
+	align-items:center;
+	justify-content: space-between;
 }

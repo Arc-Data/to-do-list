@@ -2,13 +2,13 @@ import './style.css';
 import project from './projects.js';
 import task from './task.js';
 
-
 const DOMController = (() => {
 	const generalTask = [];
 
 	const addProjectBtn = document.querySelector('#open-project-dialog');
 	const projectDialog = document.querySelector('#project-form-dialog');
 	const taskDialog = document.querySelector("#task-form-dialog");
+	const taskDetailDialog = document.querySelector("#task-detail-dialog");
 
 	const projectTitle = document.querySelector('#project-title');
 	const projectTitleCounter = document.querySelector('#title-counter');
@@ -28,7 +28,7 @@ const DOMController = (() => {
 		projectDialog.showModal();
 	}
 
-	const closeProjectFormDialog = (e) => {
+	const closeDialog = (e) => {
 		if(!e.target.closest('div')) {
 			e.target.close();
 		}
@@ -36,12 +36,6 @@ const DOMController = (() => {
 
 	const openTaskFormDialog = () => {
 		taskDialog.showModal();
-	}
-
-	const closeTaskFormDialog = (e) => {
-		if(!e.target.closest('div')) {
-			e.target.close();
-		}
 	}
 
 	const countLetters = (event, p, limit) => {
@@ -55,13 +49,7 @@ const DOMController = (() => {
 		projectDescCounter.textContent = `0/50`;
 	}
 
-	const clearProjectList = () => {
-		while(projectListContainer.firstChild) {
-			projectListContainer.removeChild(projectListContainer.lastChild);
-		}
-	}
-
-	const clearTasks = (container) => {
+	const clearContainerItems = (container) => {
 		while(container.firstChild) {
 			container.removeChild(container.lastChild);
 		}
@@ -81,6 +69,58 @@ const DOMController = (() => {
 		})
 	}
 
+	const taskDetails = (e) => {
+		clearContainerItems(taskDetailDialog);
+		const taskIdx = e.target.closest('div').dataset.idx;
+		const projectObj = project.getProject(currentPage);
+		const taskObj = projectObj.tasks[taskIdx];
+
+		const taskDetailContainer = document.createElement('div');
+		taskDetailContainer.classList.add('task-detail-container');
+		taskDetailDialog.appendChild(taskDetailContainer);
+
+		const headerSection = document.createElement('div');
+		headerSection.classList.add('task-detail-header');
+		taskDetailContainer.appendChild(headerSection);
+
+		const h3 = document.createElement('h3');
+		h3.textContent = taskObj.title;
+
+		const dueDate = document.createElement('p');
+		dueDate.textContent = `Due Date: ${taskObj.dueDate}`;
+		dueDate.style.fontSize = '1.4rem';
+		headerSection.append(h3,dueDate);
+
+		const p = document.createElement('p');
+		p.textContent = taskObj.description;
+		p.classList.add('task-description');
+
+		const btnContainer = document.createElement('div');
+		btnContainer.style.padding = '10px';
+		btnContainer.classList.add('btn-flex', 'btn-flex-right');
+
+		const completeTaskBtn = document.createElement('div');
+		completeTaskBtn.classList.add('btn', 'primary-btn');
+		completeTaskBtn.textContent = taskObj.isFinished ? `Set to Incomplete` : `Set to Complete`;
+
+		const deleteTaskBtn = document.createElement('div');
+		deleteTaskBtn.classList.add('btn', 'delete-btn');
+		deleteTaskBtn.textContent = 'Delete'
+
+		const closeBtn = document.createElement('div');
+		closeBtn.classList.add('btn', 'ghost-btn');
+		closeBtn.textContent = 'Close';
+		closeBtn.addEventListener('click', () => {
+			taskDetailDialog.close();
+		})
+
+		btnContainer.append(deleteTaskBtn, completeTaskBtn,  closeBtn);
+
+
+		taskDetailContainer.append(headerSection, p, btnContainer);
+		taskDetailDialog.showModal();
+	}
+
 	const taskComplete = (e, index) => {
 		const projectObj = project.getProject(currentPage);
 		const idx = e.target.closest('div').dataset.idx;
@@ -92,14 +132,14 @@ const DOMController = (() => {
 	const renderTasks = () => {
 		const tasks = project.getProject(currentPage).tasks;
 		const taskContainer = document.querySelector('#task-container')
-		clearTasks(taskContainer);
+		clearContainerItems(taskContainer);
 
 		tasks.forEach((taskItem, idx) => {
 			let taskCard = document.createElement('div');
 			taskCard.classList.add('taskCard');
 			taskCard.dataset.idx = idx;
+			
 			if(taskItem.isFinished) {
-				console.log(`Supposed to be finished : ${taskItem.title}`)
 				taskCard.classList.add('complete');
 			}
 			
@@ -110,6 +150,8 @@ const DOMController = (() => {
 			detailsBtn.textContent = 'DETAILS';
 			detailsBtn.classList.add('btn');
 			detailsBtn.classList.add('detail-btn')
+			detailsBtn.dataset.idx = idx;
+			detailsBtn.addEventListener('click', taskDetails);
 
 			let dueDate = document.createElement('div');
 			dueDate.textContent = taskItem.dueDate;
@@ -132,11 +174,10 @@ const DOMController = (() => {
 		const title = document.querySelector('#task-title').value;
 		const description = document.querySelector('#task-description').value;
 		const dueDate = document.querySelector('#due-date').value;
-		const priority = document.querySelector("#task-priority").value;
 
-		if(!title || !priority || !dueDate) return; 
+		if(!title || !dueDate) return; 
 
-		const taskObj = task.createTask(title, description, dueDate, priority);
+		const taskObj = task.createTask(title, description, dueDate);
 		project.addTask(currentPage, taskObj);
 		renderTasks();
 		taskDialog.close();
@@ -216,7 +257,7 @@ const DOMController = (() => {
 	const renderProjectList = () => {
 		const projectList = project.getProjectList()
 
-		clearProjectList();
+		clearContainerItems(projectListContainer);
 
 		projectList.forEach((project, idx) => {
 			let div = document.createElement('div');
@@ -245,8 +286,9 @@ const DOMController = (() => {
 
 	general.addEventListener('click', renderGeneralPage);
 
-	projectDialog.addEventListener('click', closeProjectFormDialog);
-	taskDialog.addEventListener('click', closeTaskFormDialog);
+	projectDialog.addEventListener('click', closeDialog);
+	taskDialog.addEventListener('click', closeDialog);
+	taskDetailDialog.addEventListener('click', closeDialog);
 	addProjectBtn.addEventListener('click', openProjectFormDialog);
 	createTaskBtn.addEventListener('click', createTask);
 	projectTitle.addEventListener('input', (e) => countLetters(e, projectTitleCounter, 30));

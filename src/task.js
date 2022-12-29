@@ -4,14 +4,13 @@ const Task = (title, description, dueDate, priority) => {
 		title, 
 		description,
 		dueDate,
-		priority,
 		isFinished,
 	}
 }
 
 const task = (() => {
-	const createTask = (title, description, date, priority) => {
-		return Task(title, description, date, priority);
+	const createTask = (title, description, date) => {
+		return Task(title, description, date);
 	}
 
 	const changeStatus = (task, value) => {
