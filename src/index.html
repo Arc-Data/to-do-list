@@ -4,11 +4,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>ToDoList</title>
+	
 </head>
 <body>
 	<header>
 		<div>ToDoList</div>
-		<input type="search" name="search" id = 'search-bar' placeholder = "Search for note">
 		<div></div>
 	</header>
 	<div class = "side-bar">
@@ -22,7 +22,10 @@
 			Create new list
 		</button>
 	</div>
-	<div id = "main-content"></div>
+	<div id = "main-content">
+					
+
+	</div>
 	<dialog id = 'project-form-dialog'>
 		<form method = "POST" action = ".">
 			<div class="form-header">
@@ -65,7 +68,7 @@
 				</div>
 				<div class="form-row">
 					<label for = 'task-title'>Due Date</label>
-					<input type="date" name="due-date" id = 'due-date'>
+					<input type="date"  placeholder = "Select Date" name="due-date" id = 'due-date'>
 				</div>
 				
 				
@@ -78,5 +81,6 @@
 	<dialog id="task-detail-dialog">
 			
 	</dialog>
+	
 </body>
 </html>

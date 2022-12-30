@@ -3,8 +3,6 @@ import project from './projects.js';
 import task from './task.js';
 
 const DOMController = (() => {
-	// const generalTask = [];
-
 	const addProjectBtn = document.querySelector('#open-project-dialog');
 	const projectDialog = document.querySelector('#project-form-dialog');
 	const taskDialog = document.querySelector("#task-form-dialog");
@@ -36,6 +34,8 @@ const DOMController = (() => {
 
 	const openTaskFormDialog = () => {
 		taskDialog.showModal();
+
+
 	}
 
 	const countLetters = (event, p, limit) => {
@@ -58,21 +58,21 @@ const DOMController = (() => {
 	const renderGeneralTasks = () => {
 		const taskContainer = document.querySelector('#task-container')
 		const projects = project.getProjectList();
-		projects.forEach(project => {
-			project.tasks.forEach(task => {
+		projects.forEach((project, projectIdx) => {
+			project.tasks.forEach((task, taskIdx) => {
 				if(task.isFinished) return;
 				let div = document.createElement('div');
 				div.textContent = task.title;
 				div.classList.add('taskCard');
+				div.addEventListener('click', (e) => taskDetails(e, projectIdx, taskIdx))
 				taskContainer.appendChild(div);
 			}) 
 		})
 	}
 
-	const taskDetails = (e) => {
+	const taskDetails = (e, projectPage, taskIdx) => {
 		clearContainerItems(taskDetailDialog);
-		const taskIdx = e.target.closest('div').dataset.idx;
-		const projectObj = project.getProject(currentPage);
+		const projectObj = project.getProject(projectPage);
 		const taskObj = projectObj.tasks[taskIdx];
 		taskDetailDialog.dataset.idx = taskIdx;
 
@@ -162,7 +162,7 @@ const DOMController = (() => {
 			detailsBtn.classList.add('btn');
 			detailsBtn.classList.add('detail-btn')
 			detailsBtn.dataset.idx = idx;
-			detailsBtn.addEventListener('click', taskDetails);
+			detailsBtn.addEventListener('click', (e) => taskDetails(e, currentPage, idx));
 
 			let dueDate = document.createElement('div');
 			dueDate.textContent = taskItem.dueDate;
@@ -268,10 +268,8 @@ const DOMController = (() => {
 	const renderProjectList = () => {
 		clearContainerItems(projectListContainer);
 		const projectList = project.getProjectList()
-		console.log(projectList);
 
 		projectList.forEach((project, idx) => {
-			console.log(project)
 			let div = document.createElement('div');
 			div.textContent = project.title;
 			div.dataset.idx = idx; 
