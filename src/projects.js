@@ -34,11 +34,17 @@ const projects = (() => {
 		saveProjectState();
 	}
 
+	const deleteProjectTask = (index, taskIdx) => {
+		projects[index].tasks.splice(taskIdx, 1);
+		saveProjectState();
+	}
+
 	return {
 		addProject,
 		getProjectList,
 		getProject,
 		deleteProject,
+		deleteProjectTask,
 		addTask, 
 		saveProjectState,
 	}

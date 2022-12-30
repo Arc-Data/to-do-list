@@ -3,7 +3,7 @@ import project from './projects.js';
 import task from './task.js';
 
 const DOMController = (() => {
-	const generalTask = [];
+	// const generalTask = [];
 
 	const addProjectBtn = document.querySelector('#open-project-dialog');
 	const projectDialog = document.querySelector('#project-form-dialog');
@@ -74,6 +74,7 @@ const DOMController = (() => {
 		const taskIdx = e.target.closest('div').dataset.idx;
 		const projectObj = project.getProject(currentPage);
 		const taskObj = projectObj.tasks[taskIdx];
+		taskDetailDialog.dataset.idx = taskIdx;
 
 		const taskDetailContainer = document.createElement('div');
 		taskDetailContainer.classList.add('task-detail-container');
@@ -102,10 +103,21 @@ const DOMController = (() => {
 		const completeTaskBtn = document.createElement('div');
 		completeTaskBtn.classList.add('btn', 'primary-btn');
 		completeTaskBtn.textContent = taskObj.isFinished ? `Set to Incomplete` : `Set to Complete`;
+		completeTaskBtn.addEventListener('click', () => {
+			task.changeStatus(taskObj, !taskObj.isFinished);
+			project.saveProjectState();
+			taskDetailDialog.close();
+			renderTasks();
+		})
 
 		const deleteTaskBtn = document.createElement('div');
 		deleteTaskBtn.classList.add('btn', 'delete-btn');
-		deleteTaskBtn.textContent = 'Delete'
+		deleteTaskBtn.textContent = 'Delete';
+		deleteTaskBtn.addEventListener('click', () => {
+			project.deleteProjectTask(currentPage, taskIdx)
+			renderTasks();
+			taskDetailDialog.close();
+		});
 
 		const closeBtn = document.createElement('div');
 		closeBtn.classList.add('btn', 'ghost-btn');
@@ -116,14 +128,13 @@ const DOMController = (() => {
 
 		btnContainer.append(deleteTaskBtn, completeTaskBtn,  closeBtn);
 
-
 		taskDetailContainer.append(headerSection, p, btnContainer);
 		taskDetailDialog.showModal();
 	}
 
-	const taskComplete = (e, index) => {
+	const taskComplete = (e, taskIdx) => {
 		const projectObj = project.getProject(currentPage);
-		const idx = e.target.closest('div').dataset.idx;
+		const idx = taskIdx ? taskIdx : e.target.closest('div').dataset.idx;
 		task.changeStatus(projectObj.tasks[idx], e.target.checked);
 		project.saveProjectState();
 		renderTasks();
