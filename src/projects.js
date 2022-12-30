@@ -8,7 +8,7 @@ const Project = (title, description, tasks) => {
 
 const projects = (() => {
 	const projects = JSON.parse(localStorage.getItem("projects")) || [];
-
+	console.log(projects);
 	const getProjectList = () => projects;
 
 	const addProject = (title, desc) => {
@@ -27,6 +27,7 @@ const projects = (() => {
 
 	const addTask = (index, task) => {
 		projects[index].tasks.push(task);
+		saveProjectState();
 	}
 
 	const deleteProject = (index) => {

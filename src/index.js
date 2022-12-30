@@ -266,11 +266,12 @@ const DOMController = (() => {
 	}
 
 	const renderProjectList = () => {
-		const projectList = project.getProjectList()
-
 		clearContainerItems(projectListContainer);
+		const projectList = project.getProjectList()
+		console.log(projectList);
 
 		projectList.forEach((project, idx) => {
+			console.log(project)
 			let div = document.createElement('div');
 			div.textContent = project.title;
 			div.dataset.idx = idx; 
