@@ -43,7 +43,7 @@ const DOMController = (() => {
 	const cleanProjectInput = () => {
 		projectTitle.value = '';
 		projectDesc.value = '';
-		projectTitleCounter.textContent = `0/30`;
+		projectTitleCounter.textContent = `0/20`;
 		projectDescCounter.textContent = `0/50`;
 	}
 
@@ -213,15 +213,17 @@ const DOMController = (() => {
 
 	const createTask = (e) => {
 		e.preventDefault();
-		const title = document.querySelector('#task-title').value;
-		const description = document.querySelector('#task-description').value;
-		const dueDate = document.querySelector('#due-date').value;
+		const title = document.querySelector('#task-title');
+		const description = document.querySelector('#task-description');
+		const dueDate = document.querySelector('#due-date');
 
-		if(!title || !dueDate) return; 
+		if(!title.value || !dueDate.value) return; 
 
-		const taskObj = task.createTask(title, description, dueDate);
+		const taskObj = task.createTask(title.value, description.value, dueDate.value);
 		project.addTask(currentPage, taskObj);
 		renderTasks();
+		title.value = '';
+		description.value = '';
 		taskDialog.close();
 	}
 
