@@ -34,8 +34,6 @@ const DOMController = (() => {
 
 	const openTaskFormDialog = () => {
 		taskDialog.showModal();
-
-
 	}
 
 	const countLetters = (event, p, limit) => {
@@ -61,13 +59,46 @@ const DOMController = (() => {
 		projects.forEach((project, projectIdx) => {
 			project.tasks.forEach((task, taskIdx) => {
 				if(task.isFinished) return;
-				let div = document.createElement('div');
-				div.textContent = task.title;
-				div.classList.add('taskCard');
-				div.addEventListener('click', (e) => taskDetails(e, projectIdx, taskIdx))
-				taskContainer.appendChild(div);
+	
+				let taskCard = document.createElement('div');
+				taskCard.classList.add('taskCard');
+				
+				taskContainer.appendChild(taskCard);
+				
+				let taskTitle = document.createElement('p');
+				taskTitle.textContent = task.title;
+				taskCard.appendChild(taskTitle);
+
+				let detailsBtn = document.createElement('div');
+				detailsBtn.textContent = 'DETAILS';
+				detailsBtn.classList.add('btn');
+				detailsBtn.classList.add('detail-btn')
+				detailsBtn.addEventListener('click', (e) => {
+					taskDetails(e, projectIdx, taskIdx)
+				});
+				taskCard.appendChild(detailsBtn);
+
+				let projectTitle = document.createElement('p');
+				projectTitle.textContent = project.title;
+				taskCard.appendChild(projectTitle);
+				
+				let dueDate = document.createElement('p');
+				dueDate.textContent = task.dueDate;
+				taskCard.appendChild(dueDate);
 			}) 
 		})
+	}
+
+	const setActiveTab = (index) => {
+		const active = document.querySelector('.active');
+		active.classList.remove('active');
+		if(index == -1) {
+			general.classList.add('active');
+			return;
+		}
+
+		const tab = document.querySelector(`[data-idx="${index}"]`);
+		tab.classList.add('active');
 	}
 
 	const taskDetails = (e, projectPage, taskIdx) => {
@@ -107,16 +138,16 @@ const DOMController = (() => {
 			task.changeStatus(taskObj, !taskObj.isFinished);
 			project.saveProjectState();
 			taskDetailDialog.close();
-			renderTasks();
+			renderPage(-1);
 		})
 
 		const deleteTaskBtn = document.createElement('div');
 		deleteTaskBtn.classList.add('btn', 'delete-btn');
 		deleteTaskBtn.textContent = 'Delete';
 		deleteTaskBtn.addEventListener('click', () => {
-			project.deleteProjectTask(currentPage, taskIdx)
-			renderTasks();
+			project.deleteProjectTask(projectPage, taskIdx)
 			taskDetailDialog.close();
+			renderPage(-1);
 		});
 
 		const closeBtn = document.createElement('div');
@@ -195,6 +226,7 @@ const DOMController = (() => {
 	}
 
 	const renderGeneralPage = () => {
+		setActiveTab(-1);
 		clearPageContent();
 		currentPage = -1;
 
@@ -220,8 +252,10 @@ const DOMController = (() => {
 	}
 
 	const renderPage = (index) => {
+		setActiveTab(index);
 		clearPageContent();
 		currentPage = index;
+		if(currentPage == -1) return renderGeneralPage();
 		const projectObj = project.getProject(index);	
 		
 		const h1 = document.createElement('h1');

@@ -322,7 +322,7 @@ dialog::backdrop {
 
 .task-detail-container {
 	display:grid;
-	grid-template-rows:auto 1fr auto;
+	grid-template-rows:auto 120px auto;
 }
 
 .task-description {
@@ -333,4 +333,9 @@ dialog::backdrop {
 	display:flex;
 	align-items:center;
 	justify-content: space-between;
+}
+
+.active {
+	color:#1088eb;
+	background:#e5e5e5;
 }
