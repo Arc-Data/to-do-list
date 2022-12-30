@@ -3,26 +3,29 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title></title>
+	<title>ToDoList</title>
+
 <script defer src="main.js"></script></head>
 <body>
 	<header>
 		<div>ToDoList</div>
-		<input type="search" name="search" id = 'search-bar' placeholder = "Search for note">
 		<div></div>
 	</header>
 	<div class = "side-bar">
 		<div class = 'project-navigation'>
-			<div id = 'general'>General</div>
+			<div id = 'general' class = "active">General</div>
 			<div id = 'categories'>Categories</div>
 			<div class = 'projects-list'>
 			</div>
 		</div>
-		<button id = 'open-project-dialog'>
-			Create new list
-		</button>
+		<div id = 'open-project-dialog'>
+			<p>Create new list</p>
+		</div>
 	</div>
-	<div id = "main-content"></div>
+	<div id = "main-content">
+					
+
+	</div>
 	<dialog id = 'project-form-dialog'>
 		<form method = "POST" action = ".">
 			<div class="form-header">
@@ -65,16 +68,9 @@
 				</div>
 				<div class="form-row">
 					<label for = 'task-title'>Due Date</label>
-					<input type="date" name="due-date" id = 'due-date'>
+					<input type="date"  placeholder = "Select Date" name="due-date" id = 'due-date'>
 				</div>
-				<div class="form-row">
-					<label for = 'task-priority'>Task Priority</label>
-					<select id = 'task-priority' name = 'task-priority'>
-						<option value = 'low'>Low</option>
-						<option value = 'medium'>Medium</option>
-						<option value = 'high'>High</option>
-					</select>
-				</div>
+				
 				
 			</div>
 			<div class="form-footer">
@@ -82,5 +78,9 @@
 			</div>
 		</form>
 	</dialog>
+	<dialog id="task-detail-dialog">
+			
+	</dialog>
+	
 </body>
 </html>
